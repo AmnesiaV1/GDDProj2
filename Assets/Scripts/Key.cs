@@ -5,10 +5,9 @@ using UnityEngine;
 public class Key : MonoBehaviour
 {
     #region Interact_functions
-    //If player collides with key, increment player key count (can be done in playercontroller)
-    public void Interact()
+    public void Interact(GameObject player)
     {
-        //Todo: just skeleton, subject to change.
+        player.GetComponent<PlayerController>().keyCount += 1;
         Destroy(this.gameObject);
     }
     #endregion

@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
         }
         //Update sprint UI
 
+
         //Attack
         if (Input.GetKeyDown(KeyCode.Mouse0) && attackTimer <= 0)
         {
@@ -98,15 +99,24 @@ public class PlayerController : MonoBehaviour
         {
             attackTimer -= Time.deltaTime;
         }
+
+        
+        //Interact
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Interact();
+        }
     }
     #endregion
 
     #region Movement_functions
     private void Move()
     {
+        //Set speed and store direction facing
         Vector2 movementVector = new Vector2(xAxis, yAxis);
-        currDirection = movementVector;
         PlayerRB.velocity = movementVector * moveSpeed;
+
+        currDirection = movementVector;
     }
     #endregion
 
@@ -170,6 +180,24 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
 
         yield return null;
+    }
+    #endregion
+
+    #region Interact_functions
+    private void Interact()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(PlayerRB.position + currDirection, Vector2.one, 0f, Vector2.zero, 0f);
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.transform.CompareTag("Door"))
+            {
+                hit.transform.GetComponent<Door>().Interact(this.gameObject);
+            } else if (hit.transform.CompareTag("Key"))
+            {
+                hit.transform.GetComponent<Key>().Interact(this.gameObject);
+            }
+        }
     }
     #endregion
 }

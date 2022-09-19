@@ -12,11 +12,6 @@ public class Ghost : MonoBehaviour
     float moveSpeed;
     #endregion
 
-    #region Attack_variables
-    [SerializeField]
-    private float attackRadius;
-    #endregion
-
     #region Physics_components
     Rigidbody2D GhostRB;
     #endregion
@@ -54,36 +49,13 @@ public class Ghost : MonoBehaviour
     #endregion
 
     #region Attack_functions
-    /* private void Attack()
-    {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, attackRadius, Vector2.zero);
-
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit.transform.CompareTag("Player"))
-            {
-                //function to end game (doesn't necessarily have to be in this script)
-                EndGame();
-            }
-        }
-    } */
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
-            //function to end the game (doesn't necessarily have to be in this script)
-            EndGame();
+            //function to end the game
+            Debug.Log("Game Over!");
         }
-    }
-    #endregion
-
-    #region Game_functions
-    public void EndGame()
-    {
-        Debug.Log("Game Over!");
-        //Todo
-        return;
     }
     #endregion
 }

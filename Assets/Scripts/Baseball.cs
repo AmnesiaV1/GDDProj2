@@ -11,6 +11,7 @@ public class Baseball : MonoBehaviour
             //Todo: set up game manager.
             //GameObject gm = GameObject.FindWithTag("GameController");
             //gm.GetComponent<GameManager>().WinGame();
+            Debug.Log("Victory!");
         }
     }
 }
