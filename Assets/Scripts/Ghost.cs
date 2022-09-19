@@ -81,6 +81,7 @@ public class Ghost : MonoBehaviour
     #region Game_functions
     public void EndGame()
     {
+        Debug.Log("Game Over!");
         //Todo
         return;
     }
