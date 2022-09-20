@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour
     float sprintTimer;
     bool recharging;
     bool canSprint;
+    public Slider sprintSlider;
     #endregion
 
     #region Attack_variables
@@ -36,11 +39,14 @@ public class PlayerController : MonoBehaviour
     float attackTimer;
     bool isAttacking;
     Vector2 currDirection;
+    public Slider attackSlider;
     #endregion
 
     #region Interact_variables
     [Tooltip("Indicates how many keys are currently being held")]
     public int keyCount;
+    public GameObject keyTextObject;
+    private TextMeshProUGUI keyText;
     #endregion
 
     #region Animation_variables
@@ -57,9 +63,15 @@ public class PlayerController : MonoBehaviour
         sprintTimer = sprintCooldown;
         recharging = false;
         canSprint = true;
+        //Slide intitialize
+        sprintSlider.value = sprintTimer / sprintCooldown;
 
         //Attack variable setup
         attackTimer = 0;
+        //Slider initialize
+        attackSlider.value = 1 - (attackTimer / attackSpeed);
+        //Key initialize
+        keyText = keyTextObject.GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
@@ -89,7 +101,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(SprintRechargeRoutine());
         }
         //Update sprint UI
-
+        sprintSlider.value = sprintTimer / sprintCooldown;
 
         //Attack
         if (Input.GetKeyDown(KeyCode.Mouse0) && attackTimer <= 0)
@@ -99,8 +111,9 @@ public class PlayerController : MonoBehaviour
         {
             attackTimer -= Time.deltaTime;
         }
+        //Update attack UI
+        attackSlider.value = 1 - (attackTimer / attackSpeed);
 
-        
         //Interact
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -193,9 +206,14 @@ public class PlayerController : MonoBehaviour
             if (hit.transform.CompareTag("Door"))
             {
                 hit.transform.GetComponent<Door>().Interact(this.gameObject);
-            } else if (hit.transform.CompareTag("Key"))
+                //update key text
+                keyText.text = "Keys: " + keyCount.ToString();
+            }
+            else if (hit.transform.CompareTag("Key"))
             {
                 hit.transform.GetComponent<Key>().Interact(this.gameObject);
+                //update key text
+                keyText.text = "Keys: " + keyCount.ToString();
             }
         }
     }
