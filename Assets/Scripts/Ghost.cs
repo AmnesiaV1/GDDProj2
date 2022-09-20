@@ -68,8 +68,8 @@ public class Ghost : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            //function to end the game
-            Debug.Log("Game Over!");
+            GameObject gm = GameObject.FindWithTag("GameController");
+            gm.GetComponent<GameManager>().GameOver();
         }
     }
     #endregion

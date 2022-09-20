@@ -8,10 +8,8 @@ public class Baseball : MonoBehaviour
     {
         if (coll.CompareTag("Player"))
         {
-            //Todo: set up game manager.
-            //GameObject gm = GameObject.FindWithTag("GameController");
-            //gm.GetComponent<GameManager>().WinGame();
-            Debug.Log("Victory!");
+            GameObject gm = GameObject.FindWithTag("GameController");
+            gm.GetComponent<GameManager>().WinGame();
         }
     }
 }
