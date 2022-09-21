@@ -72,6 +72,9 @@ public class PlayerController : MonoBehaviour
         attackSlider.value = 1 - (attackTimer / attackSpeed);
         //Key initialize
         keyText = keyTextObject.GetComponent<TextMeshProUGUI>();
+
+        //grab animator
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -130,6 +133,10 @@ public class PlayerController : MonoBehaviour
         PlayerRB.velocity = movementVector * moveSpeed;
 
         currDirection = movementVector;
+
+        //Update animator
+        anim.SetFloat("dirX", xAxis);
+        anim.SetFloat("dirY", yAxis);
     }
     #endregion
 
