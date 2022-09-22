@@ -28,11 +28,18 @@ public class Ghost : MonoBehaviour
     private GameObject player;
     #endregion
 
+    #region Animator_variables
+    private Animator anim;
+    #endregion
+
     #region Unity_functions
     private void Awake()
     {
         //grabs the ghost rigidbody
         GhostRB = GetComponent<Rigidbody2D>();
+
+        //grab animator
+        anim = GetComponent<Animator>(); 
     }
 
     private void Update()
@@ -60,6 +67,9 @@ public class Ghost : MonoBehaviour
         }
 
         GhostRB.velocity = direction.normalized * moveSpeed;
+
+        //update animator
+        anim.SetFloat("dirX", direction.x);
     }
     #endregion
 
