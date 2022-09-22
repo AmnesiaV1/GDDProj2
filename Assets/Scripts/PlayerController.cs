@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     bool isAttacking;
     Vector2 currDirection;
     public Slider attackSlider;
+    public Object bat;
     #endregion
 
     #region Interact_variables
@@ -186,6 +187,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(hitboxTiming);
 
+        spawnBat(currDirection);
         RaycastHit2D[] hits = Physics2D.BoxCastAll(PlayerRB.position + currDirection, Vector2.one, 0f, Vector2.zero);
         foreach (RaycastHit2D hit in hits)
         {
@@ -201,6 +203,29 @@ public class PlayerController : MonoBehaviour
 
         yield return null;
     }
+
+    private void spawnBat(Vector2 currDirection)
+    {
+        float x = currDirection.x;
+        float y = currDirection.y;
+
+        if (x < 0)
+        {
+            Instantiate(bat, transform.position + Vector3.left, transform.rotation);
+        }
+        else if (x > 0)
+        {
+            Instantiate(bat, transform.position + Vector3.right, transform.rotation);
+        }
+        else if (y > 0)
+        {
+            Instantiate(bat, transform.position + Vector3.up, transform.rotation);
+        }
+        else
+        {
+            Instantiate(bat, transform.position + Vector3.down, transform.rotation);
+        }
+    } 
     #endregion
 
     #region Interact_functions
