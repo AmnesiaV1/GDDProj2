@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(hitboxTiming);
 
         spawnBat(currDirection);
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(PlayerRB.position + currDirection, Vector2.one, 0f, Vector2.zero);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(PlayerRB.position + (currDirection * 2), Vector2.one, 0f, Vector2.zero);
         foreach (RaycastHit2D hit in hits)
         {
             Debug.Log(hit.transform.name);
