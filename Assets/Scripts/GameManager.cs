@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        SceneManager.LoadScene("VictoryScene");
+        SceneManager.LoadScene("WinScene");
     }
 
     public void MainMenu()

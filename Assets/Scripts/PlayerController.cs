@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D PlayerRB;
     float xAxis;
     float yAxis;
+    public Vector2 currDirection;
     #endregion
 
     #region Sprint_variables
@@ -38,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private float minDistance, maxDistance;
     float attackTimer;
     bool isAttacking;
-    Vector2 currDirection;
     public Slider attackSlider;
     #endregion
 
@@ -154,14 +154,17 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(rechargeDelay);
         canSprint = true;
-
-        sprintTimer += Time.deltaTime * rechargeRate;
-        if (sprintTimer >= sprintCooldown)
+        
+        if (recharging)
         {
-            recharging = false;
-            sprintTimer = sprintCooldown;
+            sprintTimer += Time.deltaTime * rechargeRate;
+            if (sprintTimer >= sprintCooldown)
+            {
+                recharging = false;
+                sprintTimer = sprintCooldown;
+            }
         }
-    }
+     }
     #endregion
 
     #region Attack_functions
