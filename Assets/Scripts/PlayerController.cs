@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     float attackTimer;
     bool isAttacking;
     public Slider attackSlider;
+    public GameObject bat;
     #endregion
 
     #region Interact_variables
@@ -72,6 +73,9 @@ public class PlayerController : MonoBehaviour
         attackSlider.value = 1 - (attackTimer / attackSpeed);
         //Key initialize
         keyText = keyTextObject.GetComponent<TextMeshProUGUI>();
+
+        //grabs animator
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -130,6 +134,10 @@ public class PlayerController : MonoBehaviour
         PlayerRB.velocity = movementVector * moveSpeed;
 
         currDirection = movementVector;
+
+        //update animator
+        anim.SetFloat("dirX", currDirection.x);
+        anim.SetFloat("dirY", currDirection.y);
     }
     #endregion
 
@@ -182,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(hitboxTiming);
 
+        spawnBat(currDirection);
         RaycastHit2D[] hits = Physics2D.BoxCastAll(PlayerRB.position + currDirection, Vector2.one, 0f, Vector2.zero);
         foreach (RaycastHit2D hit in hits)
         {
@@ -196,6 +205,29 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
 
         yield return null;
+    }
+
+    private void spawnBat(Vector2 currDiretion)
+    {
+        float x = currDirection.x;
+        float y = currDirection.y;
+
+        if (x < 0)
+        {
+            Instantiate(bat, transform.position + Vector3.left, transform.rotation);
+        }
+        else if (x > 0)
+        {
+            Instantiate(bat, transform.position + Vector3.right, transform.rotation);
+        }
+        else if (y > 0)
+        {
+            Instantiate(bat, transform.position + Vector3.up, transform.rotation);
+        }
+        else
+        {
+            Instantiate(bat, transform.position + Vector3.down, transform.rotation);
+        }
     }
     #endregion
 
